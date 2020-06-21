@@ -2,14 +2,6 @@ class CommentsController < ApplicationController
 
   #before_action :set_comment, only: [:show, :update, :destroy]
 
-  def index
-    comments = Comment.all
-    options = {
-      include: [:post]
-    }
-    render json: CommentSerializer.new(comments, options)
-  end
-
   def show
     comment = Comment.find_by_id(params[:id])
     options = {
