@@ -3,27 +3,27 @@ class PostsController < ApplicationController
 
   def index
     posts = Post.all
-    #options = {
-      #include: [:comment]
-    #}
-    render json: PostSerializer.new(posts)#options)
+    options = {
+      include: [:comments]
+    }
+    render json: PostSerializer.new(posts, options)
   end
 
   def show
     post = Post.find_by_id(params[:id])
-    #options = {
-      #include: [:comment]
-    #}
-    render json: PostSerializer.new(post)#, options)
+    options = {
+      include: [:comments]
+    }
+    render json: PostSerializer.new(post, options)
   end
 
   def create
     post = Post.new(post_params)
     if post.save
-      #options = {
-        #include: [:comment]
-      #}
-      render json: PostSerializer.new(post)#, options)#, status: :created, location: post
+      options = {
+        include: [:comments]
+      }
+      render json: PostSerializer.new(post, options)#, status: :created, location: post
     else
       render json: post.errors#, status: :unprocessable_entity
     end
@@ -31,7 +31,10 @@ class PostsController < ApplicationController
 
   def update
     if post.update(post_params)
-      render json: PostSerializer.new(post)#, options)#, status: :created, location: post
+      options = {
+        include: [:comments]
+      }
+      render json: PostSerializer.new(post, options)#, status: :created, location: post
     else
       render json: post.errors#, status: :unprocessable_entity
     end
