@@ -1,29 +1,21 @@
 class PostsController < ApplicationController
   #before_action :set_post, only: [:show, :update]
-
+  
   def index
     posts = Post.all
-    options = {
-      include: [:comments]
-    }
-    render json: PostSerializer.new(posts, options)
+    render json: posts.as_json(include: {comments: {only: [:id, :content, :name, :created_at]}})
   end
-
+  
   def show
     post = Post.find_by_id(params[:id])
-    options = {
-      include: [:comments]
-    }
-    render json: PostSerializer.new(post, options)
+    render json: post.as_json(include: {comments: {only: [:id, :content, :name, :created_at]}})
   end
 
   def create
     post = Post.new(post_params)
     if post.save
-      options = {
-        include: [:comments]
-      }
-      render json: PostSerializer.new(post, options)#, status: :created, location: post
+      render json: post.as_json(include: {comments: {only: [:id, :content, :name, :created_at]}})
+        #, status: :created, location: post
     else
       render json: post.errors#, status: :unprocessable_entity
     end
@@ -31,10 +23,8 @@ class PostsController < ApplicationController
 
   def update
     if post.update(post_params)
-      options = {
-        include: [:comments]
-      }
-      render json: PostSerializer.new(post, options)#, status: :created, location: post
+      render json: post.as_json(include: {comments: {only: [:id, :content, :name, :created_at]}})
+        #, status: :created, location: post
     else
       render json: post.errors#, status: :unprocessable_entity
     end
@@ -47,6 +37,13 @@ class PostsController < ApplicationController
   #end
 
   def post_params
-    params.require(:post).permit(:title, :content, :author_name,:likes)
+    params.require(:post).permit(
+      :id, 
+      :title, 
+      :content, 
+      :author_name, 
+      :likes, 
+      :comments_attributes => [:id, :content, :name]
+     )
   end
 end
