@@ -7,17 +7,14 @@ class CommentsController < ApplicationController
     options = {
       include: [:post]
     }
-    render json: CommentSerializer.new(comment, options)  
+    render json: comment.as_json(include: {post: {only: [:id, :title, :content, :author_name, :likes, :created_at]}})  
   end
-
+  
   def create
     comment = Comment.new(comment_params)
 
     if comment.save
-      options = {
-        include: [:post]
-      }
-      render json: CommentSerializer.new(comment, options)#, status: :created, location: comment
+      render json: comment.as_json(include: {post: {only: [:id, :title, :content, :author_name, :likes, :created_at]}})
     else
       render json: comment.errors#, status: :unprocessable_entity
     end
@@ -30,7 +27,7 @@ class CommentsController < ApplicationController
   #end
 
   def comment_params
-    params.require(:comment).permit(:content, :name, :post_id)
+    params.require(:comment).permit(:id, :content, :name, :post_id)
   end
 
 end
