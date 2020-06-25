@@ -45,7 +45,7 @@ class PostsController < ApplicationController
       :author_name, 
       :likes,
       :created_at, 
-      :comments_attributes => [:id, :content, :name, :created_at]
+      :comments_attributes => [:id, :content, :name, :created_at, :post_id]
      )
   end
 end
