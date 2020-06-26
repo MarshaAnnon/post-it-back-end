@@ -5,10 +5,10 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.text :content
       t.string :author_name
       t.integer :likes
-
+      t.string :img
       t.timestamps
     end
-    add_index :posts, :title, unique: true
-    add_index :posts, :author_name, unique: true
+    add_index :posts, :title
+    add_index :posts, :author_name
   end
 end
