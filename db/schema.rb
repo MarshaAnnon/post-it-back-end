@@ -29,10 +29,11 @@ ActiveRecord::Schema.define(version: 2020_06_21_204303) do
     t.text "content"
     t.string "author_name"
     t.integer "likes"
+    t.string "img"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_name"], name: "index_posts_on_author_name", unique: true
-    t.index ["title"], name: "index_posts_on_title", unique: true
+    t.index ["author_name"], name: "index_posts_on_author_name"
+    t.index ["title"], name: "index_posts_on_title"
   end
 
   add_foreign_key "comments", "posts"
