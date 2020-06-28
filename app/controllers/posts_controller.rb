@@ -17,18 +17,16 @@ class PostsController < ApplicationController
 
     if @post.save
       render json: @post.as_json(include: {comments: {only: [:id, :content, :name, :created_at]}})
-        #, status: :created, location: post
     else
-      render json: @post.errors#, status: :unprocessable_entity
+      render json: @post.errors, status: :unprocessable_entity
     end
   end  
 
   def update
     if @post.update(post_params)
       render json: @post.as_json(include: {comments: {only: [:id, :content, :name, :created_at]}})
-        #, status: :created, location: post
     else
-      render json: @post.errors#, status: :unprocessable_entity
+      render json: @post.errors, status: :unprocessable_entity
     end
   end
 
