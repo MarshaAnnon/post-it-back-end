@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
         if @comment.save
           render json: @comment.as_json(include: {post: {only: [:id, :title, :content, :author_name, :likes, :created_at]}})
         else
-          render json: @comment.errors#, status: :unprocessable_entity
+          render json: @comment.errors, status: :unprocessable_entity
         end
       end
     
