@@ -14,7 +14,6 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-
     if @post.save
       render json: @post.as_json(include: {comments: {only: [:id, :content, :name, :created_at]}})
     else
@@ -43,6 +42,7 @@ class PostsController < ApplicationController
       :content, 
       :author_name, 
       :likes,
+      :img,
       :created_at, 
       :comments_attributes => [:id, :content, :name, :created_at, :post_id]
      )
